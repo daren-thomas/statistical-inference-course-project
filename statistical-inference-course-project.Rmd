@@ -48,4 +48,10 @@ abline(v=theoretical.mean, col='red')
 legend("topright", c("Sample mean", "Theoretical mean"), fill=c("blue", "red"))
 ```
 
-The sample mean is `r sample.mean` and the theoretical mean is `r theoretical.mean`. The difference is `r theoretical.mean - sample.mean`
+The sample mean is `r sample.mean` and the theoretical mean is `r theoretical.mean`. The difference is `r theoretical.mean - sample.mean`. I use the mean of the exponential distribution as the mean of the distribution of the means because CLM states I can.
+
+### Variance of sample vs. theoretical variance
+
+The CLM states that the averages are approximately normal, with distributions centered at the population mean and with standard deviation equal to the standard error of the mean.
+
+The Variance of the sample is `r var(sim.means)` while the theoretical variance is `r 1/lambda`. The difference is `r 1/lambda - var(sim.means)`.
