@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 In this project, I investigate the exponential distribution in R and compare it with the Central Limit Theorem. Let's start with a sample of the exponential distribution:
 
 ```{r}
-n <- 1000
+n <- 1000 * 40  # taking n as the number of simulations of 40 averages...
 lambda <- 0.2
 sim <- rexp(n, lambda)
 plot(sim)
@@ -39,6 +39,7 @@ Let's calculate some simple statistics... say...
 ### Sample mean and theoretical mean
 
 ```{r}
+hist(sim.means, breaks = 20, main = 'Distribution of means of 40 exponentials')
 sample.mean <- mean(sim.means)
 theoretical.mean <- 1/lambda
 
@@ -48,20 +49,3 @@ legend("topright", c("Sample mean", "Theoretical mean"), fill=c("blue", "red"))
 ```
 
 The sample mean is `r sample.mean` and the theoretical mean is `r theoretical.mean`. The difference is `r theoretical.mean - sample.mean`
-
-
-
-```{r}
-print('The mean is: ' & mean(sim.means))
-print('The standard deviation is: ' + sd(sim))
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
