@@ -57,6 +57,17 @@ print(theoretical.var)
 
 The sample variance is `r sim.means.var` and the theoretical variance is `r theoretical.var` - the difference is `r sim.means.var - theoretical.var`.
 
-### The distribution is approximately normal
+### Question 3: The distribution is approximately normal
 
-Based on the CLM, the distribution of the 
+Based on the CLM, the distribution of the of the simulated means should approximate a normal distribution with mean `r theoretical.mean` and variance `r theoretical.var`. Let's just plot such a distribution over our histogram:
+
+```{r}
+# plot simulated means
+hist(sim.means, breaks = 40, freq=FALSE, xlab = "Simulated means", main = "Comparison of simulated means to X' ~ N(5, 0.625) ", col = "grey")
+
+# plot the theoretical distribution
+x <- seq(min(sim.means), max(sim.means), length = 100) 
+y <- dnorm(x, mean = theoretical.mean, theoretical.sd)
+lines(x, y, lty=2, col='red')
+```
+
