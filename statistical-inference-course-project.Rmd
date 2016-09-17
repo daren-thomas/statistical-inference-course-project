@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+set.seed(17)
 ```
 
 ## Part 1: Simulation Excercise
@@ -14,32 +15,19 @@ knitr::opts_chunk$set(echo = TRUE)
 In this project, I investigate the exponential distribution in R and compare it with the Central Limit Theorem. Let's start with a sample of the exponential distribution:
 
 ```{r}
-n <- 1000 * 40  # taking n as the number of simulations of 40 averages...
+n <- 40  # size of each averaging operation
+sim.count <- 1000  # number of averaging operations
 lambda <- 0.2
-sim <- rexp(n, lambda)
-plot(sim)
-```
-
-What a mess! Let's clean that up a bit... what would, say, the distribution of averages of 40 exponentials look like?
-
-```{r}
-bin.size <- 40
-sim.means <- apply(replicate(n / bin.size, sample(sim, size = bin.size)), 2, mean)
+sim.means <- apply(replicate(sim.count, rexp(n, lambda)), 2, mean)
 plot(sim.means)
 ```
 
-Nice! We could also look at the distribution...
+Nice! Can you see a pattern? I can't! We should do some statistics...
+
+### Question 1: Sample mean and theoretical mean
 
 ```{r}
-hist(sim.means, breaks = 20, main = 'Distribution of means of 40 exponentials')
-```
-
-Let's calculate some simple statistics... say...
-
-### Sample mean and theoretical mean
-
-```{r}
-hist(sim.means, breaks = 20, main = 'Distribution of means of 40 exponentials')
+hist(sim.means, main = 'Distribution of means of 40 exponentials')
 sample.mean <- mean(sim.means)
 theoretical.mean <- 1/lambda
 
@@ -50,8 +38,25 @@ legend("topright", c("Sample mean", "Theoretical mean"), fill=c("blue", "red"))
 
 The sample mean is `r sample.mean` and the theoretical mean is `r theoretical.mean`. The difference is `r theoretical.mean - sample.mean`. I use the mean of the exponential distribution as the mean of the distribution of the means because CLM states I can.
 
-### Variance of sample vs. theoretical variance
+### Question 2: Variance of sample vs. theoretical variance
 
 The CLM states that the averages are approximately normal, with distributions centered at the population mean and with standard deviation equal to the standard error of the mean. The CLM states that the means shoudl follow a standard normal distribution "N(mu/s^2/n)". Therefore the theoretical variance is s^2/n. We know s to be 1/lambda, so:
 
-The sample variance is `r var(sim.means)` and the theoretical variance is `r (1/lambda)^2/length(sim.means)` - the difference is `r var(sim.menas) - ((1/lambda)^2/length(sim.means))`
+```{r}
+# sample variance (of the means)
+sim.means.var <- var(sim.means)
+print(sim.means.var)
+
+# theoretical variance (according to CLM)
+theoretical.sd <- 1/lambda / sqrt(n)
+theoretical.var <- theoretical.sd^2
+print(theoretical.var)
+```
+
+
+
+The sample variance is `r sim.means.var` and the theoretical variance is `r theoretical.var` - the difference is `r sim.means.var - theoretical.var`.
+
+### The distribution is approximately normal
+
+Based on the CLM, the distribution of the 
