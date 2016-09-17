@@ -1,0 +1,67 @@
+---
+title: "Statistical Inference Course Project"
+author: "Daren Thomas"
+date: "17 September 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Part 1: Simulation Excercise
+
+In this project, I investigate the exponential distribution in R and compare it with the Central Limit Theorem. Let's start with a sample of the exponential distribution:
+
+```{r}
+n <- 1000
+lambda <- 0.2
+sim <- rexp(n, lambda)
+plot(sim)
+```
+
+What a mess! Let's clean that up a bit... what would, say, the distribution of averages of 40 exponentials look like?
+
+```{r}
+bin.size <- 40
+sim.means <- apply(replicate(n / bin.size, sample(sim, size = bin.size)), 2, mean)
+plot(sim.means)
+```
+
+Nice! We could also look at the distribution...
+
+```{r}
+hist(sim.means, breaks = 20, main = 'Distribution of means of 40 exponentials')
+```
+
+Let's calculate some simple statistics... say...
+
+### Sample mean and theoretical mean
+
+```{r}
+sample.mean <- mean(sim.means)
+theoretical.mean <- 1/lambda
+
+abline(v=sample.mean, col='blue')
+abline(v=theoretical.mean, col='red')
+legend("topright", c("Sample mean", "Theoretical mean"), fill=c("blue", "red"))
+```
+
+The sample mean is `r sample.mean` and the theoretical mean is `r theoretical.mean`. The difference is `r theoretical.mean - sample.mean`
+
+
+
+```{r}
+print('The mean is: ' & mean(sim.means))
+print('The standard deviation is: ' + sd(sim))
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
