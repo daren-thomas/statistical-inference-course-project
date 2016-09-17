@@ -52,6 +52,6 @@ The sample mean is `r sample.mean` and the theoretical mean is `r theoretical.me
 
 ### Variance of sample vs. theoretical variance
 
-The CLM states that the averages are approximately normal, with distributions centered at the population mean and with standard deviation equal to the standard error of the mean.
+The CLM states that the averages are approximately normal, with distributions centered at the population mean and with standard deviation equal to the standard error of the mean. The CLM states that the means shoudl follow a standard normal distribution "N(mu/s^2/n)". Therefore the theoretical variance is s^2/n. We know s to be 1/lambda, so:
 
-The Variance of the sample is `r var(sim.means)` while the theoretical variance is `r 1/lambda`. The difference is `r 1/lambda - var(sim.means)`.
+The sample variance is `r var(sim.means)` and the theoretical variance is `r (1/lambda)^2/length(sim.means)` - the difference is `r var(sim.menas) - ((1/lambda)^2/length(sim.means))`
