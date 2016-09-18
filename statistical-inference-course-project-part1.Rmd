@@ -1,5 +1,5 @@
 ---
-title: "Statistical Inference Course Project"
+title: "Statistical Inference Course Project Part 1"
 author: "Daren Thomas"
 date: "17 September 2016"
 output: html_document
@@ -71,3 +71,4 @@ y <- dnorm(x, mean = theoretical.mean, theoretical.sd)
 lines(x, y, lty=2, col='red')
 ```
 
+The plot shows how the density of the simulated means follows the expected normal distribution quite closely.
