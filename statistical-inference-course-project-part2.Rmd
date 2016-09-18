@@ -23,7 +23,32 @@ head(ToothGrowth)
 summary(ToothGrowth)
 unique(ToothGrowth$dose)
 
-plot(len ~ supp, data=ToothGrowth)
+# huh... looks like the dose is a factor
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+
+boxplot(len ~ supp, data=ToothGrowth)
+boxplot(len ~ dose, data=ToothGrowth)
 ```
+
+When we look at the data, it seems the dose is significant and the supp might be significant. But hey, we're scientists, so let's find out! Time to bust out some theory :)
+
+### Use of Confidence intervals and Hypothesis tests to compare dose / supp to len
+
+```{r}
+t.test(len ~ supp,data=ToothGrowth)
+```
+
+What does this tell us? Using the p-value (0.06063) we are inclined to accept the null hypothesis for an alpha of 0.05. The confidence interval contains zero, also supporting the null hypothesis. With this data we cannot make the claim that the delivery method affects the response in the length of odontoblasts.
+
+Next, let us explore the effect of dose on the tooth growth:
+
+```{r}
+t.test(len ~ dose, data=ToothGrowth, dose %in% c(0.5, 1.0))
+t.test(len ~ dose, data=ToothGrowth, dose %in% c(1.0, 2.0))
+
+# and, for good measure
+t.test(len ~ dose, data=ToothGrowth, dose %in% c(0.5, 2.0))
+```
+
 
 
